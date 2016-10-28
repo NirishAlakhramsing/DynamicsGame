@@ -542,7 +542,7 @@ public class RPGCharacterControllerFREE : MonoBehaviour
 		} 
 	}
 
-	void GetHit()
+	public void GetHit()
 	{
 		int hits = 5;
 		int hitNumber = Random.Range(0, hits);
