@@ -584,7 +584,7 @@ public class RPGCharacterControllerFREE : MonoBehaviour
 		}
 	}
 
-	IEnumerator _Death()
+	public IEnumerator _Death()
 	{
 		animator.SetTrigger("Death1Trigger");
 		StartCoroutine(_LockMovementAndAttack(.1f, 1.5f));
@@ -795,4 +795,14 @@ public class RPGCharacterControllerFREE : MonoBehaviour
 	}
 
 	#endregion
+
+    public void startDeath()
+    {
+        StartCoroutine(_Death());
+    }
+
+    public void startRevive()
+    {
+        StartCoroutine(_Revive());
+    }
 }

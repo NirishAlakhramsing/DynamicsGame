@@ -8,6 +8,8 @@ public class ProjectileBehaviour : MonoBehaviour
     private Vector3 forward;
     HealthBarScript hpScript;
     RPGCharacterControllerFREE animScript;
+    public EnemyBehaviour enemyScript;
+
 
     // Use this for initialization
     void Start()
@@ -32,16 +34,25 @@ public class ProjectileBehaviour : MonoBehaviour
             animScript = col.GetComponentInChildren<RPGCharacterControllerFREE>();
 
             //remove heart from player
+            hpScript.RemoveHearth(hpScript.health);
             hpScript.health--;
-            hpScript.RemoveHearth();
 
             //play hit animation
             animScript.GetHit();
 
             //play sound
 
+            //stop firing new projectiles if health is lower than 0
+            if (hpScript.health > 0)
+            {
+                enemyScript.playerAlive = false;
+                enemyScript.canFire = false;
+            }
+
             //destroy gameobject
             Destroy(gameObject);
+
+
 
         }
     }

@@ -4,7 +4,9 @@ using System.Collections;
 public class EnemyBehaviour : MonoBehaviour {
 
     int enemyHp = 0;
-    bool canFire = false;
+    public bool canFire = false;
+
+    public bool playerAlive;
     public Transform playerPos;
     public GameObject fireProjectileObj;
 
@@ -12,6 +14,7 @@ public class EnemyBehaviour : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+        playerAlive = true;
 
         //Projectile instantiation direction settings
         this.p_Transform = gameObject.transform;
@@ -47,18 +50,12 @@ public class EnemyBehaviour : MonoBehaviour {
 
         transform.LookAt(playerPos);
 
+        Debug.Log(playerAlive);
         //look if enemy should fire
-        //if ((gameObject.transform.position.x - playerPos.transform.position.x) < 0.01 && !canFire)
-        if (canFire)
+        if (canFire && playerAlive)
         {
             StartCoroutine(enemyOneFiring());
         }
-    }
-
-    //recieving damage
-    public void gotHit()
-    {
-        enemyHp--;
     }
 
 
@@ -87,6 +84,17 @@ public class EnemyBehaviour : MonoBehaviour {
         if (col.gameObject.tag == "Player")
         {
             canFire = false;
+        }
+    }
+
+    //recieving damage
+    public void gotHit()
+    {
+        enemyHp--;
+
+        if (enemyHp == 0)
+        {
+            Destroy(gameObject);
         }
     }
 }
