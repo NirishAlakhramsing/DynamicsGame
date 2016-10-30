@@ -787,11 +787,20 @@ public class RPGCharacterControllerFREE : MonoBehaviour
 		}
 		if(isDead)
 		{
-			if(GUI.Button(new Rect(30, 270, 100, 30), "Revive"))
-			{
-				StartCoroutine(_Revive());
-			}
+
+            if (GUI.Button(new Rect(Screen.currentResolution.width / 2, Screen.currentResolution.height / 2, 100, 30), "Respawn"))
+            {
+                StartCoroutine(_Revive());
+                runSpeed = 8;
+            }
+
+
+            //if (GUI.Button(new Rect(30, 270, 100, 30), "Revive"))
+			//{
+			//	StartCoroutine(_Revive());
+			//}
 		}
+
 	}
 
 	#endregion
@@ -799,10 +808,12 @@ public class RPGCharacterControllerFREE : MonoBehaviour
     public void startDeath()
     {
         StartCoroutine(_Death());
+        runSpeed = 0;
+        startRevive();
     }
 
     public void startRevive()
     {
-        StartCoroutine(_Revive());
+            isDead = true;
     }
 }

@@ -4,7 +4,7 @@ using System.Collections;
 public class ProjectileBehaviour : MonoBehaviour
 {
 
-    public float speed, lifeTime;
+    public float speed, lifeTime, selfdestuctTime;
     private Vector3 forward;
     HealthBarScript hpScript;
     RPGCharacterControllerFREE animScript;
@@ -23,6 +23,9 @@ public class ProjectileBehaviour : MonoBehaviour
     void Update()
     {
         transform.position += forward * speed * Time.deltaTime;
+
+        //kill object after certain amount of time
+        StartCoroutine(Selfdestruct());
     }
 
     void OnTriggerEnter(Collider col)
@@ -46,14 +49,22 @@ public class ProjectileBehaviour : MonoBehaviour
             if (hpScript.health > 0)
             {
                 enemyScript.playerAlive = false;
-                enemyScript.canFire = false;
+                Destroy(gameObject);
+                
             }
 
             //destroy gameobject
+            
             Destroy(gameObject);
-
-
-
         }
+
+    }
+
+    IEnumerator Selfdestruct()
+    {
+        yield return new WaitForSeconds(selfdestuctTime);
+
+        yield return new WaitForSeconds(0.5f);
+        Destroy(gameObject);
     }
 }
