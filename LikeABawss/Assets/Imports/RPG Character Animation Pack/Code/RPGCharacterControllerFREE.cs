@@ -18,9 +18,10 @@ public class RPGCharacterControllerFREE : MonoBehaviour
 	public GameObject target;
 	private Vector3 targetDashDirection;
 	public Camera sceneCamera;
+    public GameObject fireProjectileObj;
 
-	//jumping variables
-	public float gravity = -9.8f;
+    //jumping variables
+    public float gravity = -9.8f;
 	bool canJump;
 	bool isJumping = false;
 	bool isGrounded;
@@ -64,8 +65,8 @@ public class RPGCharacterControllerFREE : MonoBehaviour
 	int leftWeapon = 0;
 	bool isRelax = false;
 
-	//isStrafing/action variables
-	bool canAction = true;
+    //isStrafing/action variables
+    bool canAction = true;
 	bool isStrafing = false;
 	bool isDead = false;
 	bool isBlocking = false;
@@ -75,6 +76,7 @@ public class RPGCharacterControllerFREE : MonoBehaviour
     //colliding with others
     public string currentCheckPoint = "";
     Transform playerPosition;
+    private Transform p_Transform;
 
     #endregion
 
@@ -85,7 +87,9 @@ public class RPGCharacterControllerFREE : MonoBehaviour
 		//set the animator component
 		animator = GetComponentInChildren<Animator>();
 		rb = GetComponent<Rigidbody>();
-	}
+
+        this.p_Transform = GameObject.Find("ProjectileStart").transform;
+    }
 
 	#endregion
 	
@@ -93,8 +97,21 @@ public class RPGCharacterControllerFREE : MonoBehaviour
 	
 	void Update()
 	{
-		//make sure there is animator on character
-		if(animator)
+        if (Input.GetMouseButtonDown(0))
+        {
+            Attack(1);
+            
+        }
+
+        if (Input.GetMouseButtonDown(1) && canAction)
+        {
+            Attack(2);
+            //instantiate projectile
+            Instantiate(fireProjectileObj, p_Transform.position, p_Transform.rotation);
+        }
+
+        //make sure there is animator on character
+        if (animator)
 		{
 			if(canMove && !isBlocking && !isDead)
 			{

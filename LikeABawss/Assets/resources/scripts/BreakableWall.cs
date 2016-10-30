@@ -13,12 +13,16 @@ public class BreakableWall : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 	
-        if (other == GameObject.Find("fireProjectile"))
-        {
-            Destroy(gameObject);
-        }
 
 	}
 
+    void OnTriggerEnter(Collider col)
+    {
+        if (col.gameObject.tag == "Projectile")
+        {
+            Destroy(col.gameObject);
+            Destroy(gameObject);
+        }
+    }
 
 }
