@@ -116,7 +116,6 @@ public class EnemyBehaviour : MonoBehaviour {
         //instantiate projectile
         Instantiate(fireProjectileObj, p_Transform.position, p_Transform.rotation);
     }
-
     
     void OnTriggerEnter(Collider col)
     {

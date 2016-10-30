@@ -72,11 +72,15 @@ public class RPGCharacterControllerFREE : MonoBehaviour
 	public float knockbackMultiplier = 1f;
 	bool isKnockback;
 
-	#endregion
+    //colliding with others
+    public string currentCheckPoint = "";
+    Transform playerPosition;
 
-	#region Initialization
+    #endregion
 
-	void Start() 
+    #region Initialization
+
+    void Start() 
 	{
 		//set the animator component
 		animator = GetComponentInChildren<Animator>();
@@ -89,7 +93,6 @@ public class RPGCharacterControllerFREE : MonoBehaviour
 	
 	void Update()
 	{
-		
 		//make sure there is animator on character
 		if(animator)
 		{
@@ -792,6 +795,7 @@ public class RPGCharacterControllerFREE : MonoBehaviour
             {
                 StartCoroutine(_Revive());
                 runSpeed = 8;
+                gameObject.transform.position = GameObject.Find(currentCheckPoint).transform.position;
             }
 
 
@@ -815,5 +819,13 @@ public class RPGCharacterControllerFREE : MonoBehaviour
     public void startRevive()
     {
             isDead = true;
+    }
+
+    void OnTriggerEnter(Collider col)
+    {
+        if (col.gameObject.tag == "Checkpoint")
+        {
+            currentCheckPoint = col.name;
+        }
     }
 }
