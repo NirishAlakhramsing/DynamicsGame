@@ -9,6 +9,7 @@ public class HealthBarScript : MonoBehaviour {
     GameObject currentHeart;
     public RPGCharacterControllerFREE playerScript;
     public EnemyBehaviour enemyScript;
+    public GameObject Heart1, Heart2, Heart3;
 
 
     // Use this for initialization
@@ -36,22 +37,22 @@ public class HealthBarScript : MonoBehaviour {
         switch (getHealth)
         {
             case 3:
-                currentHeart = GameObject.Find("Heart0");
+                //currentHeart = GameObject.Find("Heart0");
                 iTween.Stop(gameObject);
                 iTween.FadeTo(gameObject, iTween.Hash("alpha", 1f, "time", 0.5f, "easytype", iTween.EaseType.linear, "looptype", iTween.LoopType.none));
-                StartCoroutine(FadeOutUI(currentHeart));
+                StartCoroutine(FadeOutUI(Heart1));
                 break;
             case 2:
-                currentHeart = GameObject.Find("Heart1");
+                //currentHeart = GameObject.Find("Heart1");
                 iTween.Stop(gameObject);
                 iTween.FadeTo(gameObject, iTween.Hash("alpha", 1f, "time", 0.5f, "easytype", iTween.EaseType.linear, "looptype", iTween.LoopType.none));
-                StartCoroutine(FadeOutUI(currentHeart));
+                StartCoroutine(FadeOutUI(Heart2));
                 break;
             case 1:
-                currentHeart = GameObject.Find("Heart2");
+                //currentHeart = GameObject.Find("Heart2");
                 iTween.Stop(gameObject);
                 iTween.FadeTo(gameObject, iTween.Hash("alpha", 1f, "time", 0.5f, "easytype", iTween.EaseType.linear, "looptype", iTween.LoopType.none));
-                StartCoroutine(FadeOutUI(currentHeart));
+                StartCoroutine(FadeOutUI(Heart3));
                 break;
             case 0:
                 // player dies
@@ -67,11 +68,16 @@ public class HealthBarScript : MonoBehaviour {
 
     public void ReviveHearths()
     {
+        
+            Heart1.SetActive(true);
+            Heart2.SetActive(true);
+            Heart3.SetActive(true);
+
         for (int i = 0; i < 3; i++)
         {
             currentHeart = GameObject.Find("Heart"+i);
-            currentHeart.GetComponent<SpriteRenderer>().gameObject.SetActive(true);//Needs fixing here
             iTween.MoveAdd(currentHeart, iTween.Hash("amount", new Vector3(0, -5f, 0), "time", 2f, "easytype", iTween.EaseType.linear, "looptype", iTween.LoopType.none));
+            iTween.FadeTo(currentHeart, iTween.Hash("alpha", 1f, "time", 1f, "easytype", iTween.EaseType.linear, "looptype", iTween.LoopType.none));
         }
 
     }
@@ -86,7 +92,7 @@ public class HealthBarScript : MonoBehaviour {
         //Fade out the entire Healthbar UI
         yield return new WaitForSeconds(2.5f);
         //Destroy(name);
-        //name.SetActive(false);
+        name.SetActive(false);
         name.GetComponent<SpriteRenderer>().gameObject.SetActive(false);
         iTween.FadeTo(gameObject, iTween.Hash("alpha", 0f, "time", 10f, "easytype", iTween.EaseType.linear, "looptype", iTween.LoopType.none));
         

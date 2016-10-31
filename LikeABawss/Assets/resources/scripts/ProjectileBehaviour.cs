@@ -76,10 +76,9 @@ public class ProjectileBehaviour : MonoBehaviour
         {
             if (col.gameObject.tag == "EnemyT1")
             {
-                //enemyScript.Invoke("gotHit", 0f);
-                enemyScript.MiniBossHp--;
+                col.gameObject.GetComponent<MiniBoss>().miniBossHp--;
+                //enemyScript.MiniBossHp--;
                 Destroy(gameObject);
-                
             }
         }
 

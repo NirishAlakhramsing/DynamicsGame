@@ -12,7 +12,6 @@ public class EnemyBehaviour : MonoBehaviour {
     public Transform playerPos;
     public GameObject fireProjectileObj;
     public GameObject powerup;
-    RaycastHit hit;
 
     private Transform p_Transform;
 
