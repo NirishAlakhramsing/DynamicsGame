@@ -3,14 +3,15 @@ using System.Collections;
 
 public class EnemyBehaviour : MonoBehaviour {
 
-    int enemyHp = 0;
+    public int enemyHp = 0;
+    public int MiniBossHp;
     int fireRate;
     private bool inRange;
-    public bool canRaycast;
 
     public bool playerAlive;
     public Transform playerPos;
     public GameObject fireProjectileObj;
+    public GameObject powerup;
     RaycastHit hit;
 
     private Transform p_Transform;
@@ -18,7 +19,6 @@ public class EnemyBehaviour : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
         playerAlive = true;
-        canRaycast = false;
         inRange= false;
         fireRate = 0;
 
@@ -27,12 +27,11 @@ public class EnemyBehaviour : MonoBehaviour {
         //Projectile instantiation direction settings
         this.p_Transform = gameObject.transform;
 
-        //Animation floating
-        iTween.MoveAdd(GameObject.Find("EnemyOne"), iTween.Hash("amount", new Vector3(0, 0.5f, 0), "time", 2f, "easytype", iTween.EaseType.linear, "looptype", iTween.LoopType.pingPong));
-
-        if ( gameObject.name == "EnemyOne")
+        if ( gameObject.name == "MiniBossOne")
         {
-            enemyHp = 1;
+            MiniBossHp = 3;
+            //Animation floating
+            iTween.MoveAdd(GameObject.Find("MiniBossOne"), iTween.Hash("amount", new Vector3(0, 0.5f, 0), "time", 2f, "easytype", iTween.EaseType.linear, "looptype", iTween.LoopType.pingPong));
         }
 
         if ( gameObject.name == "EnemyTwo")
@@ -51,16 +50,8 @@ public class EnemyBehaviour : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
-        
-
         //always look at player
         transform.LookAt(playerPos);
-
-        // check if enemy should be dead
-        if (enemyHp <= 0)
-        {
-            Destroy(gameObject);
-        }
 
         if (inRange)
         {
@@ -70,58 +61,20 @@ public class EnemyBehaviour : MonoBehaviour {
                 enemyOneFiringV();
                 fireRate = 0;
             }
-
         }
-
     }
 
-    void FixedUpdate()
-    {
-        /*
-        Debug.Log("canRaycast is " + canRaycast);
-
-        
-        //look if enemy should fire
-        if (canRaycast && Physics.Raycast(transform.position, playerPos.transform.localPosition, out hit, 5.0f))
-        {
-            Debug.DrawLine(transform.position, playerPos.transform.localPosition, Color.red);
-            //print("Player in range to be attacked");
-            StartCoroutine(enemyOneFiring());
-            //enemyOneFiringV();
-        }
-        */
-
-
-    }
-
-    /*
-    IEnumerator enemyOneFiring()
-    {
-
-        canRaycast = false;
-
-        //wait for next firing
-        yield return new WaitForSeconds(3);
-
-        //instantiate projectile
-        Instantiate(fireProjectileObj, p_Transform.position, p_Transform.rotation);
-        Debug.Log("shot a fireball");
-        canRaycast = true;
-
-    }
-    */
 
     public void enemyOneFiringV()
     {
         //instantiate projectile
-        Instantiate(fireProjectileObj, p_Transform.position, p_Transform.rotation);
+        Instantiate(fireProjectileObj, p_Transform.position + new Vector3(0, 1f,0), p_Transform.rotation);
     }
     
     void OnTriggerEnter(Collider col)
     {
         if (col.gameObject.tag == "Player")
         {
-            //canRaycast = true;
             inRange = true;
         }
     }
@@ -130,7 +83,6 @@ public class EnemyBehaviour : MonoBehaviour {
     {
         if (col.gameObject.tag == "Player")
         {
-            canRaycast = false;
             inRange = false;
         }
     }
@@ -138,10 +90,11 @@ public class EnemyBehaviour : MonoBehaviour {
     //recieving damage
     public void gotHit()
     {
-        enemyHp--;
+        Debug.Log(MiniBossHp);
 
-        if (enemyHp == 0)
+        if (MiniBossHp < 0 && (gameObject.name == "MiniBossOne"))
         {
+            Instantiate(powerup, transform.position, transform.rotation);
             Destroy(gameObject);
         }
     }

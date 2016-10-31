@@ -9,6 +9,7 @@ public class ProjectileBehaviour : MonoBehaviour
     HealthBarScript hpScript;
     RPGCharacterControllerFREE animScript;
     public EnemyBehaviour enemyScript;
+    private bool bounced;
 
 
     // Use this for initialization
@@ -56,6 +57,30 @@ public class ProjectileBehaviour : MonoBehaviour
             //destroy gameobject
             
             Destroy(gameObject);
+        }
+
+        if (col.gameObject.tag == "Obstacle")
+        {
+            if (col.name == "Mirror")
+            {
+                gameObject.transform.Rotate(new Vector3(180f, 0, 0));
+                speed = speed * -1;
+                bounced = true;
+            } else
+            {
+                Destroy(gameObject);
+            }
+        }
+
+        if (bounced)
+        {
+            if (col.gameObject.tag == "EnemyT1")
+            {
+                //enemyScript.Invoke("gotHit", 0f);
+                enemyScript.MiniBossHp--;
+                Destroy(gameObject);
+                
+            }
         }
 
     }

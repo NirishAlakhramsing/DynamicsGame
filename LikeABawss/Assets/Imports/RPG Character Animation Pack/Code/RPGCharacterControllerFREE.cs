@@ -64,6 +64,8 @@ public class RPGCharacterControllerFREE : MonoBehaviour
 	int rightWeapon = 0;
 	int leftWeapon = 0;
 	bool isRelax = false;
+    public bool abilityOne = false;
+    public bool abilityTwo = false;
 
     //isStrafing/action variables
     bool canAction = true;
@@ -100,14 +102,23 @@ public class RPGCharacterControllerFREE : MonoBehaviour
         if (Input.GetMouseButtonDown(0))
         {
             Attack(1);
-            
+            if (abilityTwo)
+            {
+                //instantiate projectile
+                Instantiate(fireProjectileObj, p_Transform.position, p_Transform.rotation);
+            }
         }
 
         if (Input.GetMouseButtonDown(1) && canAction)
         {
             Attack(2);
-            //instantiate projectile
-            Instantiate(fireProjectileObj, p_Transform.position, p_Transform.rotation);
+
+            if (abilityOne)
+            {
+                //instantiate projectile
+                Instantiate(fireProjectileObj, p_Transform.position, p_Transform.rotation);
+            }
+
         }
 
         //make sure there is animator on character
