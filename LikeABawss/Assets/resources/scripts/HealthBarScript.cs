@@ -17,6 +17,8 @@ public class HealthBarScript : MonoBehaviour {
         iTween.FadeTo(gameObject, iTween.Hash("alpha", 0f, "time", 10f, "easytype", iTween.EaseType.linear, "looptype", iTween.LoopType.none));
 
         getUIObj = GameObject.Find("HealthBarGUI");
+
+        
 	}
 	
 	// Update is called once per frame
@@ -26,6 +28,7 @@ public class HealthBarScript : MonoBehaviour {
         if (Input.GetKeyUp(KeyCode.L))
         {
             ReviveHearths();
+            health = 3;
         }
     }
 
@@ -58,12 +61,21 @@ public class HealthBarScript : MonoBehaviour {
                 // player dies
                 Debug.Log("In switch case 0 ");
                 playerScript.Invoke("startDeath", 0.1f);
+                playerScript.runSpeed = 0;
                 enemyScript.playerAlive = false;
                 canDie = false;
                 break;
             default:
             break;
         }
+    }
+
+    public void Respawn()
+    {
+        ReviveHearths();
+        health = 3;
+        playerScript.NoMovement();
+        playerScript.runSpeed = 8;
     }
 
     public void ReviveHearths()
@@ -77,8 +89,10 @@ public class HealthBarScript : MonoBehaviour {
         {
             currentHeart = GameObject.Find("Heart"+i);
             iTween.MoveAdd(currentHeart, iTween.Hash("amount", new Vector3(0, -5f, 0), "time", 2f, "easytype", iTween.EaseType.linear, "looptype", iTween.LoopType.none));
-            iTween.FadeTo(currentHeart, iTween.Hash("alpha", 1f, "time", 1f, "easytype", iTween.EaseType.linear, "looptype", iTween.LoopType.none));
+            iTween.FadeTo(currentHeart, iTween.Hash("alpha", 1f, "time", 0.1f, "easytype", iTween.EaseType.linear, "looptype", iTween.LoopType.none));
         }
+
+        StartCoroutine(FadeInUI());
 
     }
 
@@ -96,5 +110,13 @@ public class HealthBarScript : MonoBehaviour {
         name.GetComponent<SpriteRenderer>().gameObject.SetActive(false);
         iTween.FadeTo(gameObject, iTween.Hash("alpha", 0f, "time", 10f, "easytype", iTween.EaseType.linear, "looptype", iTween.LoopType.none));
         
+    }
+
+    IEnumerator FadeInUI()
+    {
+        //Fade out the entire Healthbar UI
+        yield return new WaitForSeconds(1.5f);
+        iTween.FadeTo(gameObject, iTween.Hash("alpha", 0f, "time", 10f, "easytype", iTween.EaseType.linear, "looptype", iTween.LoopType.none));
+
     }
 }

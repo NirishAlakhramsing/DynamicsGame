@@ -38,8 +38,12 @@ public class ProjectileBehaviour : MonoBehaviour
             animScript = col.GetComponentInChildren<RPGCharacterControllerFREE>();
 
             //remove heart from player
-            hpScript.RemoveHearth(hpScript.health);
-            hpScript.health--;
+            if (hpScript.health >= 0)
+            {
+                hpScript.RemoveHearth(hpScript.health);
+                hpScript.health--;
+            }
+            
 
             //play hit animation
             animScript.GetHit();

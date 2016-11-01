@@ -19,6 +19,7 @@ public class RPGCharacterControllerFREE : MonoBehaviour
 	private Vector3 targetDashDirection;
 	public Camera sceneCamera;
     public GameObject fireProjectileObj;
+    public HealthBarScript hpScript;
 
     //jumping variables
     public float gravity = -9.8f;
@@ -816,17 +817,21 @@ public class RPGCharacterControllerFREE : MonoBehaviour
 				}
 			}
 		}
+
+        //Nirish add: revive player after buttonis pushed
 		if(isDead)
 		{
+            canJump = false;
+            canMove = false;
 
-            if (GUI.Button(new Rect(Screen.currentResolution.width / 2, Screen.currentResolution.height / 2, 100, 30), "Respawn"))
+            if (GUI.Button(new Rect(350, 500, 100, 30), "Respawn"))
             {
                 StartCoroutine(_Revive());
-                runSpeed = 8;
                 gameObject.transform.position = GameObject.Find(currentCheckPoint).transform.position;
+                hpScript.Respawn();
             }
 
-
+            //old original code
             //if (GUI.Button(new Rect(30, 270, 100, 30), "Revive"))
 			//{
 			//	StartCoroutine(_Revive());
@@ -855,5 +860,11 @@ public class RPGCharacterControllerFREE : MonoBehaviour
         {
             currentCheckPoint = col.name;
         }
+    }
+
+    public void NoMovement()
+    {
+        canJump = true;
+        canMove = true;
     }
 }

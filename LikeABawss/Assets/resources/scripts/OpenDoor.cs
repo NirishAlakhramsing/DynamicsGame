@@ -5,6 +5,7 @@ public class OpenDoor : MonoBehaviour {
 
     RPGCharacterControllerFREE playerscript;
     GameObject moveColliderBox;
+    public BackPack backpackScript;
     private bool keyDoor1, EnemyDoor1;
     public float stepziseCollisionBox1, stepsizeEnemyDoor1, stepziseCollisionBoxKey1, stepsizeKeyDoor1;
 
@@ -36,13 +37,16 @@ public class OpenDoor : MonoBehaviour {
             }
 
             //First key and door that belongs to it.
-            if (gameObject.name == "CollisionBoxKey1")
+            if (gameObject.name == "CollisionBoxKey1" && backpackScript.hasKey )
             {
                 iTween.MoveAdd(moveColliderBox = GameObject.Find("CollisionBoxKey1"), iTween.Hash("amount", new Vector3(stepziseCollisionBoxKey1, 0, 0), "time", 0.5f, "easytype", iTween.EaseType.linear, "looptype", iTween.LoopType.none));
                 stepziseCollisionBoxKey1 = 1 * -stepziseCollisionBoxKey1;
 
                 iTween.MoveAdd(GameObject.Find("DoorKeyOne"), iTween.Hash("amount", new Vector3(0, stepsizeKeyDoor1, 0), "time", 2.5f, "easytype", iTween.EaseType.linear, "looptype", iTween.LoopType.none));
                 stepsizeKeyDoor1 = 1 * -stepsizeKeyDoor1;
+            } else
+            {
+                Debug.Log("YOU HAS NO KEYZZ");
             }
         }
     }
