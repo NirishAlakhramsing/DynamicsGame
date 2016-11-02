@@ -11,10 +11,10 @@ public class ProjectileBehaviour : MonoBehaviour
     public EnemyBehaviour enemyScript;
     private bool bounced;
 
-
     // Use this for initialization
     void Start()
     {
+
         forward = transform.forward;
 
         Destroy(gameObject, lifeTime);
@@ -76,14 +76,10 @@ public class ProjectileBehaviour : MonoBehaviour
             }
         }
 
-        if (bounced)
+        if (col.gameObject.tag == "EnemyT1")
         {
-            if (col.gameObject.tag == "EnemyT1")
-            {
-                col.gameObject.GetComponent<MiniBoss>().miniBossHp--;
-                //enemyScript.MiniBossHp--;
+
                 Destroy(gameObject);
-            }
         }
 
     }
