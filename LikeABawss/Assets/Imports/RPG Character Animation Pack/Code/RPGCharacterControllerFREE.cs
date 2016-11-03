@@ -727,7 +727,7 @@ public class RPGCharacterControllerFREE : MonoBehaviour
 
 	void OnGUI()
 	{
-		if(!isDead)
+        /*if (!isDead)
 		{
 			if(canAction && !isRelax)
 			{
@@ -737,7 +737,7 @@ public class RPGCharacterControllerFREE : MonoBehaviour
 					{
 						if(!isBlocking)
 						{
-							if(GUI.Button(new Rect(25, 15, 100, 30), "Roll Forward"))
+                            if(GUI.Button(new Rect(25, 15, 100, 30), "Roll Forward"))
 							{
 								targetDashDirection = transform.forward;
 								StartCoroutine(_Roll(1));
@@ -757,8 +757,8 @@ public class RPGCharacterControllerFREE : MonoBehaviour
 								targetDashDirection = transform.right;
 								StartCoroutine(_Roll(2));
 							}
-							//ATTACK LEFT
-							if(GUI.Button(new Rect(25, 85, 100, 30), "Attack L"))
+                            //ATTACK LEFT
+                            if (GUI.Button(new Rect(25, 85, 100, 30), "Attack L"))
 							{
 								Attack(1);
 							}
@@ -766,7 +766,7 @@ public class RPGCharacterControllerFREE : MonoBehaviour
 							if(GUI.Button(new Rect(130, 85, 100, 30), "Attack R"))
 							{
 								Attack(2);
-							}
+                            }
 							if(weapon == Weapon.UNARMED) 
 							{
 								if(GUI.Button (new Rect (25, 115, 100, 30), "Left Kick")) 
@@ -778,7 +778,7 @@ public class RPGCharacterControllerFREE : MonoBehaviour
 									AttackKick (2);
 								}
 							}
-							if(GUI.Button(new Rect(30, 240, 100, 30), "Get Hit"))
+                            if (GUI.Button(new Rect(30, 240, 100, 30), "Get Hit"))
 							{
 								GetHit();
 							}
@@ -817,9 +817,10 @@ public class RPGCharacterControllerFREE : MonoBehaviour
 				}
 			}
 		}
+        */
 
         //Nirish add: revive player after buttonis pushed
-		if(isDead)
+        if (isDead)
 		{
             canJump = false;
             canMove = false;
