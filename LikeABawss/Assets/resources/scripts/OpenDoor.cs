@@ -44,10 +44,27 @@ public class OpenDoor : MonoBehaviour {
 
                 iTween.MoveAdd(GameObject.Find("DoorKeyOne"), iTween.Hash("amount", new Vector3(0, stepsizeKeyDoor1, 0), "time", 2.5f, "easytype", iTween.EaseType.linear, "looptype", iTween.LoopType.none));
                 stepsizeKeyDoor1 = 1 * -stepsizeKeyDoor1;
+
             } else if(gameObject.name == "CollisionBoxKey1" && !backpackScript.hasKey)
                 {
                 Debug.Log("yo has no key!");
-                }
+                iTween.FadeTo(GameObject.Find("NeedKey1"), iTween.Hash("alpha", 1f, "time", 0.5f, "easytype", iTween.EaseType.linear, "looptype", iTween.LoopType.none));
+            }
+        }
+    }
+
+    void OnTriggerExit(Collider col)
+    {
+
+        //Attach key to door
+        if (col.gameObject.tag == "Player")
+        {
+
+            //First key and door that belongs to it.
+            if (gameObject.name == "CollisionBoxKey1" && !backpackScript.hasKey)
+            {
+                iTween.FadeTo(GameObject.Find("NeedKey1"), iTween.Hash("alpha", 0f, "time", 0.5f, "easytype", iTween.EaseType.linear, "looptype", iTween.LoopType.none));
+            }
         }
     }
 }

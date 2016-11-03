@@ -11,6 +11,7 @@ public class CollideWithItem : MonoBehaviour {
     void Start () {
         playerBackPos = GameObject.Find("PlayerBack").transform.position;
         getPlayerObj = GameObject.Find("PlayerBack");
+        backpackScript = GameObject.Find("BackPackManager").GetComponent<BackPack>();
     }
 	
 	// Update is called once per frame
