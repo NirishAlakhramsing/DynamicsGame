@@ -32,7 +32,7 @@ public class ActivatePowerup : MonoBehaviour {
                 // activate ability one for player
                 playerScript.abilityOne = true;
                 //show UI for ability one useage
-
+                iTween.FadeTo(GameObject.Find("MouseRightButton"), iTween.Hash("alpha", 1f, "time", 1.0f, "easytype", iTween.EaseType.linear, "looptype", iTween.LoopType.none));
                 //OpenDoor
                 iTween.MoveAdd(GameObject.Find("FirstEnemyDoor"), iTween.Hash("amount", new Vector3(0, door.stepsizeEnemyDoor1, 0), "time", 2.5f, "easytype", iTween.EaseType.linear, "looptype", iTween.LoopType.none));
                 door.stepsizeEnemyDoor1 = 1 * -door.stepsizeEnemyDoor1;

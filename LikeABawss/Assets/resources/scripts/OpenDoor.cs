@@ -13,6 +13,8 @@ public class OpenDoor : MonoBehaviour {
     void Start () {
         EnemyDoor1 = true;
         keyDoor1 = false;
+
+        backpackScript = GameObject.Find("BackPackManager").GetComponent<BackPack>();
     }
 	
 	// Update is called once per frame
