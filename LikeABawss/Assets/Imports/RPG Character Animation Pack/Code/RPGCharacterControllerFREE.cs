@@ -825,7 +825,7 @@ public class RPGCharacterControllerFREE : MonoBehaviour
             canJump = false;
             canMove = false;
 
-            if (GUI.Button(new Rect(350, 500, 100, 30), "Respawn"))
+            if (GUI.Button(new Rect(10, 100, 100, 30), "Respawn"))
             {
                 StartCoroutine(_Revive());
                 gameObject.transform.position = GameObject.Find(currentCheckPoint).transform.position;

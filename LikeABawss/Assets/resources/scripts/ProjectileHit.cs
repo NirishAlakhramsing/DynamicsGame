@@ -8,15 +8,24 @@ public class ProjectileHit : MonoBehaviour {
     public Transform playerPos;
     private Transform p_Transform;
     public GameObject fireProjectileObj;
-    private GameObject fireboxObj;
+    public GameObject fireboxObj;
+
+    private int enemyID;
 
     int fireRate;
     public bool inRange;
 
     // Use this for initialization
     void Start () {
-        fireboxObj = GameObject.Find("FireBox");
+        //fireboxObj = GameObject.Find("FireBox");
+
         playerPos = GameObject.FindGameObjectWithTag("Player").transform;
+
+        if(gameObject.name == "NormalEnemy")
+        {
+            enemyID = gameObject.GetInstanceID();
+        }
+
         
         //Projectile instantiation direction settings
         this.p_Transform = fireboxObj.transform;
@@ -28,6 +37,12 @@ public class ProjectileHit : MonoBehaviour {
         {
             //Animation floating
             iTween.MoveAdd(GameObject.Find("MiniBossOne"), iTween.Hash("amount", new Vector3(0, 0.5f, 0), "time", 2f, "easytype", iTween.EaseType.linear, "looptype", iTween.LoopType.pingPong));
+        }
+
+        if (gameObject.name == "NormalEnemyw")
+        {
+            //Animation floating
+            iTween.MoveAdd(GameObject.Find("NormalEnemy"), iTween.Hash("amount", new Vector3(0, 0.5f, 0), "time", 2f, "easytype", iTween.EaseType.linear, "looptype", iTween.LoopType.pingPong));
         }
     }
 	
@@ -66,6 +81,12 @@ public class ProjectileHit : MonoBehaviour {
 
                 //Miniboss dies
                 Destroy(gameObject);
+            }
+
+            if (gameObject.name == "NormalEnemy")
+            {
+                iTween.PunchScale(GameObject.Find("NormalEnemy"), iTween.Hash("amount", new Vector3(0.05f, 0.10f, 0.05f), "time", 1f, "easytype", iTween.EaseType.linear, "looptype", iTween.LoopType.none));
+                Destroy(gameObject, 0.5f);
             }
 
         }

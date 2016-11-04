@@ -11,6 +11,8 @@ public class EnemyBehaviour : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+        //prjHitScript = GameObject.FindWithTag("Projectile").GetComponent<ProjectileHit>();
+
         playerAlive = true;
 
         if ( gameObject.name == "MiniBossOne")
