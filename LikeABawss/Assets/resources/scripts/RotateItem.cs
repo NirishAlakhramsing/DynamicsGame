@@ -7,7 +7,7 @@ public class RotateItem : MonoBehaviour {
 	void Start () {
 
             iTween.MoveAdd(gameObject, iTween.Hash("amount", new Vector3(0, 0, 1.0f), "time", 2.5f, "easytype", iTween.EaseType.linear, "looptype", iTween.LoopType.pingPong));
-            iTween.RotateAdd(gameObject, iTween.Hash("amount", new Vector3(0, 0, 360.0f), "time", 5.0f, "easytype", iTween.EaseType.linear, "looptype", iTween.LoopType.loop));
+            iTween.RotateAdd(gameObject, iTween.Hash("amount", new Vector3(0, 0, 360.0f), "time", 5.0f, "easetype", iTween.EaseType.linear, "looptype", iTween.LoopType.loop));
 
     }
 	

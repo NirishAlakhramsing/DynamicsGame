@@ -4,20 +4,21 @@ using System.Collections;
 public class EnemyBehaviour : MonoBehaviour {
 
     public int enemyHp;
-    public int MiniBossHp;
+    public int MiniBossHp, MiniBoss2Hp;
 
-    public bool playerAlive;
+    public bool playerAlive, hasShield;
     public ProjectileHit prjHitScript;
+    public GameObject firstPowerUp;
 
-	// Use this for initialization
-	void Start () {
-        //prjHitScript = GameObject.FindWithTag("Projectile").GetComponent<ProjectileHit>();
+    // Use this for initialization
+    void Start () {
 
         playerAlive = true;
 
-        if ( gameObject.name == "MiniBossOne")
+        if ( gameObject.name == "MiniBossTwo")
         {
-            
+            iTween.MoveAdd(GameObject.Find("MiniBossTwo"), iTween.Hash("amount", new Vector3(0, 0.5f, 0), "time", 2f, "easytype", iTween.EaseType.linear, "looptype", iTween.LoopType.pingPong));
+            hasShield = true;
         }
 
         if ( gameObject.name == "EnemyTwo")
@@ -37,11 +38,35 @@ public class EnemyBehaviour : MonoBehaviour {
 	void Update ()
     {
 
+        //TriggerDeath
+        if (MiniBossHp == 0)
+        {
+            //spawn sphere ability
+            Instantiate(firstPowerUp, transform.position, transform.rotation);
+
+            //Miniboss dies
+            Destroy(GameObject.Find("MiniBossOne"));
+        }
+
+        
+        if (!hasShield)
+        {
+            //Trigger Death
+            if (MiniBoss2Hp <= 0)
+            {
+                //spawn sphere ability
+                Instantiate(firstPowerUp, transform.position, transform.rotation);
+
+                //Miniboss dies
+                Destroy(GameObject.Find("MiniBossTwo"));
+            }
+        }
+
 
     }
 
 
-    
+
     void OnTriggerEnter(Collider col)
     {
         if (col.gameObject.tag == "Player")

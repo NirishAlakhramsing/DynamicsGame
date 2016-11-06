@@ -19,6 +19,8 @@ public class RPGCharacterControllerFREE : MonoBehaviour
 	private Vector3 targetDashDirection;
 	public Camera sceneCamera;
     public GameObject fireProjectileObj;
+    public GameObject explosiveProjectileObj;
+
     public HealthBarScript hpScript;
 
     //jumping variables
@@ -91,7 +93,7 @@ public class RPGCharacterControllerFREE : MonoBehaviour
 		animator = GetComponentInChildren<Animator>();
 		rb = GetComponent<Rigidbody>();
 
-        this.p_Transform = GameObject.Find("ProjectileStart").transform;
+        
     }
 
 	#endregion
@@ -100,13 +102,14 @@ public class RPGCharacterControllerFREE : MonoBehaviour
 	
 	void Update()
 	{
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonDown(0) && canAction)
         {
             Attack(1);
             if (abilityTwo)
             {
                 //instantiate projectile
-                Instantiate(fireProjectileObj, p_Transform.position, p_Transform.rotation);
+                this.p_Transform = GameObject.Find("ProjectileStartLeft").transform;
+                Instantiate(explosiveProjectileObj, p_Transform.position, p_Transform.rotation);
             }
         }
 
@@ -117,6 +120,7 @@ public class RPGCharacterControllerFREE : MonoBehaviour
             if (abilityOne)
             {
                 //instantiate projectile
+                this.p_Transform = GameObject.Find("ProjectileStartRight").transform;
                 Instantiate(fireProjectileObj, p_Transform.position, p_Transform.rotation);
             }
 

@@ -26,16 +26,31 @@ public class ActivatePowerup : MonoBehaviour {
             if (gameObject.tag == "PowerUp")
             {
 
-                iTween.PunchScale(GameObject.Find("PowerUpOne"), iTween.Hash("amount", new Vector3(0.5f, 0.1f, 0.5f), "time", 2f, "easytype", iTween.EaseType.linear, "looptype", iTween.LoopType.none));
-                iTween.MoveAdd(GameObject.Find("PowerUpOne"), iTween.Hash("amount", new Vector3(0, 2f, 0), "time", 2f, "easytype", iTween.EaseType.linear, "looptype", iTween.LoopType.none));
+                iTween.PunchScale(GameObject.Find("PowerUpOne"), iTween.Hash("amount", new Vector3(0.5f, 0.1f, 0.5f), "time", 2f, "easetype", iTween.EaseType.linear, "looptype", iTween.LoopType.none));
+                iTween.MoveAdd(GameObject.Find("PowerUpOne"), iTween.Hash("amount", new Vector3(0, 2f, 0), "time", 2f, "easetype", iTween.EaseType.linear, "looptype", iTween.LoopType.none));
                 
                 // activate ability one for player
                 playerScript.abilityOne = true;
                 //show UI for ability one useage
-                iTween.FadeTo(GameObject.Find("MouseRightButton"), iTween.Hash("alpha", 1f, "time", 1.0f, "easytype", iTween.EaseType.linear, "looptype", iTween.LoopType.none));
+                iTween.FadeTo(GameObject.Find("MouseRightButton"), iTween.Hash("alpha", 1f, "time", 1.0f, "easetype", iTween.EaseType.linear, "looptype", iTween.LoopType.none));
                 //OpenDoor
-                iTween.MoveAdd(GameObject.Find("FirstEnemyDoor"), iTween.Hash("amount", new Vector3(0, door.stepsizeEnemyDoor1, 0), "time", 2.5f, "easytype", iTween.EaseType.linear, "looptype", iTween.LoopType.none));
+                iTween.MoveAdd(GameObject.Find("FirstEnemyDoor"), iTween.Hash("amount", new Vector3(0, door.stepsizeEnemyDoor1, 0), "time", 2.5f, "easetype", iTween.EaseType.linear, "looptype", iTween.LoopType.none));
                 door.stepsizeEnemyDoor1 = 1 * -door.stepsizeEnemyDoor1;
+
+                //Destroy PowerUpObject
+                Destroy(gameObject, 0.5f);
+            }
+
+            if (gameObject.tag == "PowerUpTwo")
+            {
+
+                iTween.PunchScale(gameObject, iTween.Hash("amount", new Vector3(0.5f, 0.1f, 0.5f), "time", 2f, "easetype", iTween.EaseType.linear, "looptype", iTween.LoopType.none));
+                iTween.MoveAdd(gameObject, iTween.Hash("amount", new Vector3(0, 2f, 0), "time", 2f, "easetype", iTween.EaseType.linear, "looptype", iTween.LoopType.none));
+
+                // activate ability two for player
+                playerScript.abilityTwo = true;
+                //show UI for ability one useage
+                iTween.FadeTo(GameObject.Find("MouseLeftButton"), iTween.Hash("alpha", 1f, "time", 1.0f, "easetype", iTween.EaseType.linear, "looptype", iTween.LoopType.none));
 
                 //Destroy PowerUpObject
                 Destroy(gameObject, 0.5f);
