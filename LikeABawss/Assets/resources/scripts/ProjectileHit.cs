@@ -71,9 +71,9 @@ public class ProjectileHit : MonoBehaviour {
             }
 
             //MiniBoss two collision
-            if (gameObject.name == "MiniBossTwo" && !enemyScript.hasShield)
+            if (gameObject.name == "MiniBossTwo" && col.gameObject.name == "fireProjectile(Clone)")
             {
-                iTween.PunchScale(GameObject.Find("MiniBossTwo"), iTween.Hash("amount", new Vector3(0.05f, 0.10f, 0.05f), "time", 1f, "easetype", iTween.EaseType.linear, "looptype", iTween.LoopType.none));
+                iTween.PunchScale(GameObject.Find("MiniBossTwo"), iTween.Hash("amount", new Vector3(0.25f, 0.50f, 0.25f), "time", 1f, "easetype", iTween.EaseType.linear, "looptype", iTween.LoopType.none));
                 enemyScript.MiniBoss2Hp--;
                 Debug.Log("MiniBossTwo got hit");
             }
@@ -84,11 +84,18 @@ public class ProjectileHit : MonoBehaviour {
             {
             }
 
-            if (gameObject.name == "NormalEnemy")
+            if (gameObject.name == "NormalEnemy" && col.gameObject.name == "fireProjectile(Clone)")
             {
                 iTween.PunchScale(GameObject.Find("NormalEnemy"), iTween.Hash("amount", new Vector3(0.05f, 0.10f, 0.05f), "time", 1f, "easetype", iTween.EaseType.linear, "looptype", iTween.LoopType.none));
                 Destroy(gameObject, 0.5f);
                 Debug.Log("Normal Enemy got hit");
+            }
+
+            if (gameObject.name == "NormalShieldEnemy" && col.gameObject.name == "fireProjectile(Clone)")
+            {
+                iTween.PunchScale(GameObject.Find("NormalShieldEnemy"), iTween.Hash("amount", new Vector3(0.05f, 0.10f, 0.05f), "time", 1f, "easetype", iTween.EaseType.linear, "looptype", iTween.LoopType.none));
+                Destroy(gameObject, 0.5f);
+                Debug.Log("Shield Enemy got hit");
             }
 
         }
@@ -112,5 +119,10 @@ public class ProjectileHit : MonoBehaviour {
             Instantiate(explosiveProjectileObj, p_Transform.position, p_Transform.rotation);
         }
 
+
+        if (gameObject.name == "NormalShieldEnemy")
+        {
+            Instantiate(explosiveProjectileObj, p_Transform.position, p_Transform.rotation);
+        }
     }
 }

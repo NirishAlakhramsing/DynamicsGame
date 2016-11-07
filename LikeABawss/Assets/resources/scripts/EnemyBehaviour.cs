@@ -62,14 +62,18 @@ public class EnemyBehaviour : MonoBehaviour {
             }
         }
 
-
     }
 
 
-
+    //If player is in range - fire at player
     void OnTriggerEnter(Collider col)
     {
         if (col.gameObject.tag == "Player")
+        {
+            prjHitScript.inRange = true;
+        }
+
+        if (col.gameObject.tag == "Projectile")
         {
             prjHitScript.inRange = true;
         }

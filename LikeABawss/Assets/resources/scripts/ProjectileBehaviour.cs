@@ -14,9 +14,7 @@ public class ProjectileBehaviour : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-
         forward = transform.forward;
-
         Destroy(gameObject, lifeTime);
     }
 
@@ -31,7 +29,7 @@ public class ProjectileBehaviour : MonoBehaviour
 
     void OnTriggerEnter(Collider col)
     {
-        //Attach key to player back
+        //When PLAYER is hit From Enemy fireball ( or his own )
         if (col.gameObject.tag == "Player")
         {
             hpScript = col.GetComponentInChildren<HealthBarScript>();
@@ -44,7 +42,6 @@ public class ProjectileBehaviour : MonoBehaviour
                 hpScript.health--;
             }
             
-
             //play hit animation
             animScript.GetHit();
 
@@ -59,10 +56,11 @@ public class ProjectileBehaviour : MonoBehaviour
             }
 
             //destroy gameobject
-            
             Destroy(gameObject);
         }
 
+
+        //First miniboss. The projectile from the boss will bounce back on the mirror tagged pillar
         if (col.gameObject.tag == "Obstacle")
         {
             if (col.name == "Mirror")
@@ -70,21 +68,28 @@ public class ProjectileBehaviour : MonoBehaviour
                 gameObject.transform.Rotate(new Vector3(180f, 0, 0));
                 speed = speed * -1;
                 bounced = true;
+                Destroy(col.gameObject);
+                Debug.Log("Bounced back");
             } else
             {
                 Destroy(gameObject);
             }
         }
 
-        if (col.gameObject.tag == "EnemyT1")
+        //destroy this projectile if it hits an enemy
+        if (col.gameObject.tag == "EnemyT1" && col.gameObject.name == "NormalShieldEnemy")
         {
-                Destroy(gameObject);
-        }
-
-        if (col.gameObject.tag == "Shield")
-        {
+            Debug.Log("Collided with the enemy shield body");
             Destroy(gameObject);
         }
+
+        //destroy this projectile if it hits an shield
+         if (col.gameObject.tag == "Shield")
+         {
+             gameObject.transform.Rotate(new Vector3(180f, 0, 0));
+             speed = speed * -1;
+             //Destroy(gameObject);
+         }
 
     }
 
