@@ -78,8 +78,12 @@ public class ProjectileBehaviour : MonoBehaviour
 
         if (col.gameObject.tag == "EnemyT1")
         {
-
                 Destroy(gameObject);
+        }
+
+        if (col.gameObject.tag == "Shield")
+        {
+            Destroy(gameObject);
         }
 
     }

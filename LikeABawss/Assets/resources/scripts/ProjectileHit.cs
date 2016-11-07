@@ -33,23 +33,11 @@ public class ProjectileHit : MonoBehaviour {
         inRange = false;
         fireRate = 0;
 
-        if (gameObject.name == "MiniBossOne")
-        {
-            //Animation floating
-            iTween.MoveAdd(GameObject.Find("MiniBossOne"), iTween.Hash("amount", new Vector3(0, 0.5f, 0), "time", 2f, "easetype", iTween.EaseType.linear, "looptype", iTween.LoopType.pingPong));
-        }
+        //Animation floating
+        iTween.MoveAdd(gameObject, iTween.Hash("amount", new Vector3(0, 0.5f, 0), "time", 2f, "easytype", iTween.EaseType.linear, "looptype", iTween.LoopType.pingPong));
+        
 
-        if (gameObject.name == "MiniBossTwo")
-        {
-            //Animation floating
-            iTween.MoveAdd(GameObject.Find("MiniBossTwo"), iTween.Hash("amount", new Vector3(0, 0.5f, 0), "time", 2f, "easytype", iTween.EaseType.linear, "looptype", iTween.LoopType.pingPong));
-        }
 
-        if (gameObject.name == "NormalEnemy")
-        {
-            //Animation floating
-            iTween.MoveAdd(GameObject.Find("NormalEnemy"), iTween.Hash("amount", new Vector3(0, 0.5f, 0), "time", 2f, "easytype", iTween.EaseType.linear, "looptype", iTween.LoopType.pingPong));
-        }
     }
 	
 	// Update is called once per frame
@@ -77,16 +65,17 @@ public class ProjectileHit : MonoBehaviour {
             //MiniBoss one collision
             if (gameObject.name == "MiniBossOne")
             {
-                iTween.PunchScale(GameObject.Find("MiniBossOne"), iTween.Hash("amount", new Vector3(0.05f, 0.10f, 0.05f), "time", 1f, "easytype", iTween.EaseType.linear, "looptype", iTween.LoopType.none));
+                iTween.PunchScale(GameObject.Find("MiniBossOne"), iTween.Hash("amount", new Vector3(0.05f, 0.10f, 0.05f), "time", 1f, "easetype", iTween.EaseType.linear, "looptype", iTween.LoopType.none));
                 enemyScript.MiniBossHp--;
+                Debug.Log("MiniBoss got hit");
             }
 
             //MiniBoss two collision
             if (gameObject.name == "MiniBossTwo" && !enemyScript.hasShield)
             {
-                iTween.PunchScale(GameObject.Find("MiniBossTwo"), iTween.Hash("amount", new Vector3(0.05f, 0.10f, 0.05f), "time", 1f, "easytype", iTween.EaseType.linear, "looptype", iTween.LoopType.none));
+                iTween.PunchScale(GameObject.Find("MiniBossTwo"), iTween.Hash("amount", new Vector3(0.05f, 0.10f, 0.05f), "time", 1f, "easetype", iTween.EaseType.linear, "looptype", iTween.LoopType.none));
                 enemyScript.MiniBoss2Hp--;
-                Debug.Log("Boss got hit");
+                Debug.Log("MiniBossTwo got hit");
             }
             else if (gameObject.name == "MiniBossTwo" && enemyScript.hasShield)
                 {
@@ -95,12 +84,11 @@ public class ProjectileHit : MonoBehaviour {
             {
             }
 
-
-
             if (gameObject.name == "NormalEnemy")
             {
                 iTween.PunchScale(GameObject.Find("NormalEnemy"), iTween.Hash("amount", new Vector3(0.05f, 0.10f, 0.05f), "time", 1f, "easetype", iTween.EaseType.linear, "looptype", iTween.LoopType.none));
                 Destroy(gameObject, 0.5f);
+                Debug.Log("Normal Enemy got hit");
             }
 
         }
@@ -109,7 +97,12 @@ public class ProjectileHit : MonoBehaviour {
     public void enemyOneFiringV()
     {
         //instantiate projectile
-        if(gameObject.name == "MiniBossOne")
+        if (gameObject.name == "NormalEnemy")
+        {
+            Instantiate(fireProjectileObj, p_Transform.position, p_Transform.rotation);
+        }
+
+        if (gameObject.name == "MiniBossOne")
         {
             Instantiate(fireProjectileObj, p_Transform.position, p_Transform.rotation);
         }
