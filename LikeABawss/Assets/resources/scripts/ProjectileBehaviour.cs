@@ -10,6 +10,8 @@ public class ProjectileBehaviour : MonoBehaviour
     RPGCharacterControllerFREE animScript;
     public EnemyBehaviour enemyScript;
     private bool bounced;
+    public GameObject yellowExplosion;
+    public GameObject redExplosion;
 
     // Use this for initialization
     void Start()
@@ -75,6 +77,16 @@ public class ProjectileBehaviour : MonoBehaviour
             } else
             {
                 Destroy(gameObject);
+            }
+
+            if (gameObject.name == "fireProjectile(Clone)")
+            {
+                Instantiate(redExplosion, transform.position, transform.rotation);
+            }
+
+            if (gameObject.name == "explosiveProjectile(Clone)")
+            {
+                Instantiate(yellowExplosion, transform.position, transform.rotation);
             }
         }
 
