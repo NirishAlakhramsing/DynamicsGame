@@ -77,7 +77,7 @@ public class ProjectileBehaviour : MonoBehaviour
             }
         }
 
-        //SHIELD ENEMY: bounce back normal fire projectile
+        //SHIELD ENEMY: bounce back normal fire projectile when shield still active
         if (col.gameObject.tag == "Shield" && col.gameObject.name == "Position1" && gameObject.name == "fireProjectile(Clone)")
         {
             Debug.Log("Collided with the enemy shield body");
@@ -85,14 +85,6 @@ public class ProjectileBehaviour : MonoBehaviour
             gameObject.transform.Rotate(new Vector3(180f, 0, 0));
             speed = speed * -1;
         } 
-
-        //destroy this projectile if it hits an shield
-         if (col.gameObject.tag == "Shield")
-         {
-             
-             
-             //Destroy(gameObject);
-         }
 
     }
 

@@ -79,11 +79,14 @@ public class ProjectileHit : MonoBehaviour {
     {
         if (col.gameObject.tag == "Projectile")
         {
-            //MiniBoss one collision
-            if (gameObject.name == "MiniBossOne")
+            //MINIBOSS ONE 
+            //When miniboss gets hit by his own projectile
+            if (gameObject.name == "MiniBossOne" && gameObject.tag == "EnemyT1" && col.gameObject.name == "fireProjectile(Clone)")
             {
-                iTween.PunchScale(GameObject.Find("MiniBossOne"), iTween.Hash("amount", new Vector3(0.05f, 0.10f, 0.05f), "time", 1f, "easetype", iTween.EaseType.linear, "looptype", iTween.LoopType.none));
+                iTween.PunchScale(GameObject.Find("MiniBossOne"), iTween.Hash("amount", new Vector3(0.10f, 0.15f, 0.10f), "time", 1f, "easetype", iTween.EaseType.linear, "looptype", iTween.LoopType.none));
                 enemyScript.MiniBossHp--;
+                Instantiate(redExplosion, transform.position, transform.rotation);
+                Destroy(col.gameObject);
                 Debug.Log("MiniBoss got hit");
             }
 
@@ -108,6 +111,7 @@ public class ProjectileHit : MonoBehaviour {
                 Debug.Log("Normal Enemy got hit");
             }
 
+            //SHIELD ENEMY
             //Normal shield enemy hit on explosive projectile
             if (gameObject.tag == "Shield" && gameObject.name == "NormalShieldEnemy" && col.gameObject.name == "explosiveProjectile(Clone)" && hasShield)
             {
@@ -115,13 +119,13 @@ public class ProjectileHit : MonoBehaviour {
                 Destroy(col);
                 hasShield = false;
                 Debug.Log("Shield Enemy got hit");
-
+                //When hitting an ememy without a shield with the correct abillity
             } else if (!hasShield && gameObject.name == "NormalShieldEnemy" && col.gameObject.name == "fireProjectile(Clone)")
                 {
                 Instantiate(redExplosion, transform.position, transform.rotation);
                 Destroy(col.gameObject);
                 Destroy(gameObject);
-
+                //When hitting an ememy without a shield with the wrong abillity
                 } else if (!hasShield && gameObject.name == "NormalShieldEnemy" && col.gameObject.name == "explosiveProjectile(Clone)")
                     {
                     iTween.PunchScale(GameObject.Find("EnemyBodySE"), iTween.Hash("amount", new Vector3(0.05f, 0.10f, 0.05f), "time", 1f, "easetype", iTween.EaseType.linear, "looptype", iTween.LoopType.none));
