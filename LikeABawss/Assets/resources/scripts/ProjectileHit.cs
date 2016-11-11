@@ -21,7 +21,7 @@ public class ProjectileHit : MonoBehaviour {
 
     // Use this for initialization
     void Start () {
-        
+
         if(gameObject.name == "NormalShieldEnemy")
         {
             hasShield = true;
@@ -79,7 +79,7 @@ public class ProjectileHit : MonoBehaviour {
     {
         if (col.gameObject.tag == "Projectile")
         {
-            //MINIBOSS ONE 
+            //MINIBOSS ONE
             //When miniboss gets hit by his own projectile
             if (gameObject.name == "MiniBossOne" && gameObject.tag == "EnemyT1" && col.gameObject.name == "fireProjectile(Clone)")
             {

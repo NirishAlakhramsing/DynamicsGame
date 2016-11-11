@@ -66,6 +66,8 @@ public class ProjectileBehaviour : MonoBehaviour
         {
             if (col.name == "Mirror")
             {
+                CrumbleDownStoneScript crumblescript = col.GetComponent<CrumbleDownStoneScript>();
+                crumblescript.CreateCrumble();
                 gameObject.transform.Rotate(new Vector3(180f, 0, 0));
                 speed = speed * -1;
                 bounced = true;
