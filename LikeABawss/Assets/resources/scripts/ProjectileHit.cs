@@ -11,6 +11,7 @@ public class ProjectileHit : MonoBehaviour {
     public GameObject fireboxObj;
     public GameObject yellowExplosion;
     public GameObject redExplosion;
+    public GameObject secondPowerUp;
 
     public bool hasShield;
 
@@ -52,6 +53,14 @@ public class ProjectileHit : MonoBehaviour {
         //always look at player
         transform.LookAt(playerPos);
 
+        if(enemyScript.MiniBoss2Hp <= 0 && gameObject.name == "MiniBossTwo")
+        {
+            Destroy(gameObject);
+
+            //spawn second ability pickup
+            Instantiate(secondPowerUp, transform.position, transform.rotation);
+        }
+
         //send fire balls at player
         if (inRange)
         {
@@ -90,24 +99,30 @@ public class ProjectileHit : MonoBehaviour {
                 Debug.Log("MiniBoss got hit");
             }
 
-            //MiniBoss two collision
-            if (gameObject.name == "MiniBossTwo" && col.gameObject.name == "fireProjectile(Clone)")
+            //MNIBOSS TWO collision
+            if (gameObject.name == "MiniBossTwo" && gameObject.tag == "EnemyT1" && col.gameObject.name == "fireProjectile(Clone)" && !hasShield)
             {
-                iTween.PunchScale(GameObject.Find("MiniBossTwo"), iTween.Hash("amount", new Vector3(0.25f, 0.50f, 0.25f), "time", 1f, "easetype", iTween.EaseType.linear, "looptype", iTween.LoopType.none));
+                iTween.PunchScale(GameObject.Find("MiniBossTwo"), iTween.Hash("amount", new Vector3(0.05f, 0.20f, 0.05f), "time", 1f, "easetype", iTween.EaseType.linear, "looptype", iTween.LoopType.none));
                 enemyScript.MiniBoss2Hp--;
+                Instantiate(redExplosion, transform.position, transform.rotation);
                 Debug.Log("MiniBossTwo got hit");
             }
-            else if (gameObject.name == "MiniBossTwo" && enemyScript.hasShield)
-                {
-                    Debug.Log("Break the shield first");
-                }
+
+
+            if (gameObject.name == "MiniBossTwo" && gameObject.tag == "EnemyT1" && col.gameObject.name == "explosiveProjectile(Clone)" && !hasShield)
             {
+
+                Instantiate(yellowExplosion, transform.position, transform.rotation);
+                Destroy(col.gameObject);
             }
 
-            if (gameObject.name == "NormalEnemy" && col.gameObject.name == "fireProjectile(Clone)")
+
+            //NORMAL ENEMY
+            if ( gameObject.tag == "EnemyT1" && gameObject.name == "NormalEnemy" && col.gameObject.name == "fireProjectile(Clone)")
             {
                 iTween.PunchScale(GameObject.Find("NormalEnemy"), iTween.Hash("amount", new Vector3(0.05f, 0.10f, 0.05f), "time", 1f, "easetype", iTween.EaseType.linear, "looptype", iTween.LoopType.none));
-                Destroy(gameObject, 0.5f);
+                Instantiate(redExplosion, transform.position, transform.rotation);
+                Destroy(gameObject, 0.1f);
                 Debug.Log("Normal Enemy got hit");
             }
 
@@ -132,7 +147,6 @@ public class ProjectileHit : MonoBehaviour {
                     Instantiate(yellowExplosion, transform.position, transform.rotation);
                     Destroy(col.gameObject);
                     }
-
         }
     }
 

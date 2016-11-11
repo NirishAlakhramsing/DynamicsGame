@@ -29,7 +29,6 @@ public class ProjectileBehaviour : MonoBehaviour
 
     void OnTriggerEnter(Collider col)
     {
-        Debug.Log(col.name);
 
         //When PLAYER is hit From Enemy fireball ( or his own )
         if (col.gameObject.tag == "Player")
@@ -83,10 +82,10 @@ public class ProjectileBehaviour : MonoBehaviour
         if (col.gameObject.tag == "Shield" && col.gameObject.name == "Position1" && gameObject.name == "fireProjectile(Clone)")
         {
             Debug.Log("Collided with the enemy shield body");
-            iTween.PunchPosition(col.gameObject, iTween.Hash("z", -3f, "time" , 1f, "easetype", iTween.EaseType.linear, "looptype", iTween.LoopType.none));
+            //iTween.PunchPosition(col.gameObject, iTween.Hash("z", -3f, "time" , 1f, "easetype", iTween.EaseType.linear, "looptype", iTween.LoopType.none));
             gameObject.transform.Rotate(new Vector3(180f, 0, 0));
             speed = speed * -1;
-        } 
+        }
 
     }
 

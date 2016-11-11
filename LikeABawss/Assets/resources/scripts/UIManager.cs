@@ -67,6 +67,14 @@ public class UIManager : MonoBehaviour {
             iTween.MoveBy(GameObject.Find("CharacterUISprite"), iTween.Hash("amount", new Vector3(15f, 0f, 0f), "time", 1f, "easetype", iTween.EaseType.linear, "looptype", iTween.LoopType.none));
         }
 
+        if (textNr == 4)
+        {
+            //new text
+            text.text = "...It looks real aggressive... I want to go home now";
+            //move in
+            iTween.MoveBy(GameObject.Find("CharacterUISprite"), iTween.Hash("amount", new Vector3(15f, 0f, 0f), "time", 1f, "easetype", iTween.EaseType.linear, "looptype", iTween.LoopType.none));
+        }
+
         yield return new WaitForSeconds(readTime);
         iTween.MoveBy(GameObject.Find("CharacterUISprite"), iTween.Hash("amount", new Vector3(-15f, 0f, 0f), "time", 1f, "easetype", iTween.EaseType.linear, "looptype", iTween.LoopType.none));
         

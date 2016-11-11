@@ -7,9 +7,10 @@ public class ShieldScript : MonoBehaviour {
     public EnemyBehaviour enemyBossScript;
     public ProjectileHit enemyScript;
     public GameObject yellowExplosion;
+    public GameObject redExplosion;
 
-	// Use this for initialization
-	void Start () {
+    // Use this for initialization
+    void Start () {
 
         enemyScript = gameObject.GetComponentInParent<ProjectileHit>();
 
@@ -26,26 +27,56 @@ public class ShieldScript : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-	
+	    if (gameObject.name == "ShieldRotationField")
+        {
+            if (shieldHP == 0)
+            {
+                iTween.MoveBy(gameObject, iTween.Hash("amount", new Vector3(1.5f, -1f, 0f), "time", 0.25f, "easetype", iTween.EaseType.linear, "looptype", iTween.LoopType.none));
+                iTween.RotateAdd(gameObject, iTween.Hash("z", -90f, "time", 1f, "easetype", iTween.EaseType.linear, "looptype", iTween.LoopType.none));
+                Instantiate(yellowExplosion, transform.position, transform.rotation);
+                enemyScript.hasShield = false;
+                Destroy(gameObject, 1.25f);
+            }
+        }
 	}
 
     void OnTriggerEnter(Collider col)
     {
-        iTween.PunchScale(GameObject.Find("MiniBossTwo"), iTween.Hash("amount", new Vector3(0.25f, 0.50f, 0.25f), "time", 1f, "easetype", iTween.EaseType.linear, "looptype", iTween.LoopType.none));
+        //iTween.PunchScale(GameObject.Find("MiniBossTwo"), iTween.Hash("amount", new Vector3(0.25f, 0.50f, 0.25f), "time", 1f, "easetype", iTween.EaseType.linear, "looptype", iTween.LoopType.none));
 
-        //Incoming hit on shield
-        if (col.gameObject.tag == "Projectile" && col.gameObject.name == "explosiveProjectile(Clone)")
+        //Incoming hit on shield of small shield enemy
+        if (col.gameObject.tag == "Projectile" && col.gameObject.name == "explosiveProjectile(Clone)" && gameObject.name == "Position1")
         {
-            Debug.Log("destroying incoming projectile");
-            Debug.Log("The object that needs to be destroy is " + col.name);
             iTween.MoveBy(gameObject, iTween.Hash("amount", new Vector3(1.5f, -1f, 0f), "time", 0.25f, "easetype", iTween.EaseType.linear, "looptype", iTween.LoopType.none));
             iTween.RotateAdd(gameObject, iTween.Hash("z",-90f, "time", 1f, "easetype", iTween.EaseType.linear, "looptype", iTween.LoopType.none));
             Instantiate(yellowExplosion, transform.position, transform.rotation);
             enemyScript.hasShield = false;
             Destroy(col.gameObject);
             Destroy(gameObject, 1.25f);
-            shieldHP--;
+            
         }
+
+        //Incoming red projectile hit on shield for MinibossTwo
+        if (col.gameObject.tag == "Projectile" && col.gameObject.name == "fireProjectile(Clone)" && gameObject.name == "ShieldRotationField")
+        {
+            Destroy(col.gameObject);
+            //iTween.PunchScale(GameObject.Find("ShieldRotationField"), iTween.Hash("amount", new Vector3(0.05f, 0.15f, 0.05f), "time", 1f, "easetype", iTween.EaseType.linear, "looptype", iTween.LoopType.none));
+            iTween.RotateAdd(gameObject, iTween.Hash("y", 360f, "time", 1f, "easetype", iTween.EaseType.linear, "looptype", iTween.LoopType.none));
+            iTween.RotateAdd(gameObject, iTween.Hash("y", 360f, "time", 5f, "easetype", iTween.EaseType.linear, "looptype", iTween.LoopType.none, "delay", 1f));
+            Instantiate(redExplosion, transform.position, transform.rotation);
+            shieldHP--;
+            
+            
+        } else if (col.gameObject.tag == "Projectile" && col.gameObject.name == "explosiveProjectile(Clone)" && gameObject.name == "ShieldRotationField")
+        {
+            iTween.MoveBy(gameObject, iTween.Hash("amount", new Vector3(1.5f, -1f, 0f), "time", 0.25f, "easetype", iTween.EaseType.linear, "looptype", iTween.LoopType.none));
+            iTween.RotateAdd(gameObject, iTween.Hash("z", -90f, "time", 1f, "easetype", iTween.EaseType.linear, "looptype", iTween.LoopType.none));
+            Instantiate(yellowExplosion, transform.position, transform.rotation);
+            enemyScript.hasShield = false;
+            Destroy(col.gameObject);
+            Destroy(gameObject, 1.25f);
+        }
+
 
 
         ////shield go's down
@@ -54,6 +85,9 @@ public class ShieldScript : MonoBehaviour {
         //    enemyBossScript.hasShield = false;
         //    Destroy(gameObject);
         //}
+
+        //iTween.MoveBy(gameObject, iTween.Hash("amount", new Vector3(1.5f, -1f, 0f), "time", 0.25f, "easetype", iTween.EaseType.linear, "looptype", iTween.LoopType.none));
+        
 
     }
 }

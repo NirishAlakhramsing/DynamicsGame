@@ -43,7 +43,12 @@ public class InfoScript : MonoBehaviour {
             uiManagerScript.StartCoroutine(uiManagerScript.RenderText(1));
             Destroy(gameObject);
         }
-        
+
+        if (col.gameObject.tag == "Player" && gameObject.name == "InfoTriggerBossMeeting")
+        {
+            uiManagerScript.StartCoroutine(uiManagerScript.RenderText(4));
+            Destroy(gameObject);
+        }
 
         if (col.gameObject.tag == "Player" && gameObject.name == "InfoTriggerKeyDoor1")
         {

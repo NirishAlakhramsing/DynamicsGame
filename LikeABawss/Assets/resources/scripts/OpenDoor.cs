@@ -52,6 +52,22 @@ public class OpenDoor : MonoBehaviour {
                 Debug.Log("you has no key!");
                 iTween.FadeTo(GameObject.Find("NeedKey1"), iTween.Hash("alpha", 1f, "time", 0.5f, "easetype", iTween.EaseType.linear, "looptype", iTween.LoopType.none));
             }
+
+            //Second key and door that belongs to it.
+            if (gameObject.name == "CollisionBoxKey2" && backpackScript.hasKey2)
+            {
+                iTween.MoveAdd(moveColliderBox = GameObject.Find("CollisionBoxKey2"), iTween.Hash("amount", new Vector3(stepziseCollisionBoxKey1, 0, 0), "time", 0.5f, "easetype", iTween.EaseType.linear, "looptype", iTween.LoopType.none));
+                stepziseCollisionBoxKey1 = 1 * -stepziseCollisionBoxKey1;
+
+                iTween.MoveAdd(GameObject.Find("DoorKeyTwo"), iTween.Hash("amount", new Vector3(0, stepsizeKeyDoor1, 0), "time", 2.5f, "easetype", iTween.EaseType.linear, "looptype", iTween.LoopType.none));
+                stepsizeKeyDoor1 = 1 * -stepsizeKeyDoor1;
+
+            }
+            else if (gameObject.name == "CollisionBoxKey2" && !backpackScript.hasKey2)
+            {
+                Debug.Log("you has no key!");
+                iTween.FadeTo(GameObject.Find("NeedKey2"), iTween.Hash("alpha", 1f, "time", 0.5f, "easetype", iTween.EaseType.linear, "looptype", iTween.LoopType.none));
+            }
         }
     }
 
@@ -67,6 +83,13 @@ public class OpenDoor : MonoBehaviour {
             {
                 iTween.FadeTo(GameObject.Find("NeedKey1"), iTween.Hash("alpha", 0f, "time", 0.5f, "easetype", iTween.EaseType.linear, "looptype", iTween.LoopType.none));
             }
+
+            //Second key and door that belongs to it.
+            if (gameObject.name == "CollisionBoxKey2" && !backpackScript.hasKey)
+            {
+                iTween.FadeTo(GameObject.Find("NeedKey2"), iTween.Hash("alpha", 0f, "time", 0.5f, "easetype", iTween.EaseType.linear, "looptype", iTween.LoopType.none));
+            }
+
         }
     }
 }
