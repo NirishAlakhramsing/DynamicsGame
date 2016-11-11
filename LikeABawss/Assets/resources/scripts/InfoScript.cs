@@ -4,10 +4,12 @@ using System.Collections;
 public class InfoScript : MonoBehaviour {
 
      UIManager uiManagerScript;
+        public BossScript bossScript;
 
 	// Use this for initialization
 	void Start () {
         uiManagerScript = GameObject.Find("UI manager").GetComponent<UIManager>();
+        bossScript = GameObject.Find("Boss").GetComponent<BossScript>();
     }
 	
 	// Update is called once per frame
@@ -53,6 +55,12 @@ public class InfoScript : MonoBehaviour {
         if (col.gameObject.tag == "Player" && gameObject.name == "InfoTriggerKeyDoor1")
         {
             uiManagerScript.StartCoroutine(uiManagerScript.RenderText(2));
+            Destroy(gameObject);
+        }
+
+        if (col.gameObject.tag == "Player" && gameObject.name == "StartBossFight")
+        {
+            bossScript.goToNextPhase = true;
             Destroy(gameObject);
         }
 

@@ -12,6 +12,7 @@ public class ProjectileHit : MonoBehaviour {
     public GameObject yellowExplosion;
     public GameObject redExplosion;
     public GameObject secondPowerUp;
+    public BossScript bossScript;
 
     public bool hasShield;
 
@@ -22,6 +23,8 @@ public class ProjectileHit : MonoBehaviour {
 
     // Use this for initialization
     void Start () {
+
+        bossScript = GameObject.Find("Boss").GetComponent<BossScript>();
 
         if(gameObject.name == "NormalShieldEnemy")
         {
@@ -122,8 +125,10 @@ public class ProjectileHit : MonoBehaviour {
             {
                 iTween.PunchScale(GameObject.Find("NormalEnemy"), iTween.Hash("amount", new Vector3(0.05f, 0.10f, 0.05f), "time", 1f, "easetype", iTween.EaseType.linear, "looptype", iTween.LoopType.none));
                 Instantiate(redExplosion, transform.position, transform.rotation);
+                bossScript.enemies--;
                 Destroy(gameObject, 0.1f);
                 Debug.Log("Normal Enemy got hit");
+                
             }
 
             //SHIELD ENEMY
@@ -139,6 +144,7 @@ public class ProjectileHit : MonoBehaviour {
                 {
                 Instantiate(redExplosion, transform.position, transform.rotation);
                 Destroy(col.gameObject);
+                bossScript.enemies--;
                 Destroy(gameObject);
                 //When hitting an ememy without a shield with the wrong abillity
                 } else if (!hasShield && gameObject.name == "NormalShieldEnemy" && col.gameObject.name == "explosiveProjectile(Clone)")

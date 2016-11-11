@@ -14,6 +14,11 @@ public class ShieldScript : MonoBehaviour {
 
         enemyScript = gameObject.GetComponentInParent<ProjectileHit>();
 
+        if (transform.parent.name == "Boss")
+        {
+            iTween.RotateAdd(gameObject, iTween.Hash("y", 360f, "time", 5f, "easetype", iTween.EaseType.linear, "looptype", iTween.LoopType.loop));
+        }
+
         if (transform.parent.name == "MiniBossTwo")
         {
             iTween.RotateAdd(gameObject, iTween.Hash("y", 360f, "time", 5f, "easetype", iTween.EaseType.linear, "looptype", iTween.LoopType.loop));
@@ -29,7 +34,7 @@ public class ShieldScript : MonoBehaviour {
 	void Update () {
 	    if (gameObject.name == "ShieldRotationField")
         {
-            if (shieldHP == 0)
+            if (shieldHP <= 0)
             {
                 iTween.MoveBy(gameObject, iTween.Hash("amount", new Vector3(1.5f, -1f, 0f), "time", 0.25f, "easetype", iTween.EaseType.linear, "looptype", iTween.LoopType.none));
                 iTween.RotateAdd(gameObject, iTween.Hash("z", -90f, "time", 1f, "easetype", iTween.EaseType.linear, "looptype", iTween.LoopType.none));
@@ -52,8 +57,7 @@ public class ShieldScript : MonoBehaviour {
             Instantiate(yellowExplosion, transform.position, transform.rotation);
             enemyScript.hasShield = false;
             Destroy(col.gameObject);
-            Destroy(gameObject, 1.25f);
-            
+            Destroy(gameObject, 1.25f); 
         }
 
         //Incoming red projectile hit on shield for MinibossTwo
@@ -67,7 +71,7 @@ public class ShieldScript : MonoBehaviour {
             shieldHP--;
             
             
-        } else if (col.gameObject.tag == "Projectile" && col.gameObject.name == "explosiveProjectile(Clone)" && gameObject.name == "ShieldRotationField")
+        } else if (col.gameObject.tag == "Projectile" && col.gameObject.name == "explosiveProjectile(Clone)" && gameObject.name == "ShieldRotationField" && transform.parent.name != "Boss")
         {
             iTween.MoveBy(gameObject, iTween.Hash("amount", new Vector3(1.5f, -1f, 0f), "time", 0.25f, "easetype", iTween.EaseType.linear, "looptype", iTween.LoopType.none));
             iTween.RotateAdd(gameObject, iTween.Hash("z", -90f, "time", 1f, "easetype", iTween.EaseType.linear, "looptype", iTween.LoopType.none));
