@@ -27,6 +27,14 @@ public class CrumbleDownStoneScript : MonoBehaviour {
                 Instantiate(crumbleObject, new Vector3(transformObj.position.x, transformObj.position.y + 5f, transformObj.position.z), transform.rotation);
             }
         }
+
+        if (gameObject.name == "WallCollider")
+        {
+            for (int i = 0; i < 10; i++)
+            {
+                Instantiate(crumbleObject, new Vector3(transformObj.position.x, transformObj.position.y, transformObj.position.z), transform.rotation);
+            }
+        }
     }
 
 }
