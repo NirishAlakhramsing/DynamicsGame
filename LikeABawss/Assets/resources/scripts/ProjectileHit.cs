@@ -9,6 +9,10 @@ public class ProjectileHit : MonoBehaviour {
     public GameObject fireProjectileObj;
     public GameObject explosiveProjectileObj;
     public GameObject fireboxObj;
+    public GameObject yellowExplosion;
+    public GameObject redExplosion;
+
+    public bool hasShield;
 
     private int enemyID;
 
@@ -17,7 +21,11 @@ public class ProjectileHit : MonoBehaviour {
 
     // Use this for initialization
     void Start () {
-        //fireboxObj = GameObject.Find("FireBox");
+        
+        if(gameObject.name == "NormalShieldEnemy")
+        {
+            hasShield = true;
+        }
 
         playerPos = GameObject.FindGameObjectWithTag("Player").transform;
 
@@ -35,8 +43,6 @@ public class ProjectileHit : MonoBehaviour {
 
         //Animation floating
         iTween.MoveAdd(gameObject, iTween.Hash("amount", new Vector3(0, 0.5f, 0), "time", 2f, "easytype", iTween.EaseType.linear, "looptype", iTween.LoopType.pingPong));
-        
-
 
     }
 	
@@ -55,6 +61,17 @@ public class ProjectileHit : MonoBehaviour {
                 enemyOneFiringV();
                 fireRate = 0;
             }
+        }
+    }
+
+    void FixedUpdate()
+    {
+        float maxDistance = 0.5f;
+        Vector3 fwd = transform.TransformDirection(Vector3.forward);
+
+        Debug.DrawLine(transform.position, fwd);
+
+        if (Physics.Raycast(transform.position, fwd, maxDistance)) {
         }
     }
 
@@ -91,12 +108,26 @@ public class ProjectileHit : MonoBehaviour {
                 Debug.Log("Normal Enemy got hit");
             }
 
-            if (gameObject.name == "NormalShieldEnemy" && col.gameObject.name == "fireProjectile(Clone)")
+            //Normal shield enemy hit on explosive projectile
+            if (gameObject.tag == "Shield" && gameObject.name == "NormalShieldEnemy" && col.gameObject.name == "explosiveProjectile(Clone)" && hasShield)
             {
                 iTween.PunchScale(GameObject.Find("NormalShieldEnemy"), iTween.Hash("amount", new Vector3(0.05f, 0.10f, 0.05f), "time", 1f, "easetype", iTween.EaseType.linear, "looptype", iTween.LoopType.none));
-                Destroy(gameObject, 0.5f);
+                Destroy(col);
+                hasShield = false;
                 Debug.Log("Shield Enemy got hit");
-            }
+
+            } else if (!hasShield && gameObject.name == "NormalShieldEnemy" && col.gameObject.name == "fireProjectile(Clone)")
+                {
+                Instantiate(redExplosion, transform.position, transform.rotation);
+                Destroy(col.gameObject);
+                Destroy(gameObject);
+
+                } else if (!hasShield && gameObject.name == "NormalShieldEnemy" && col.gameObject.name == "explosiveProjectile(Clone)")
+                    {
+                    iTween.PunchScale(GameObject.Find("EnemyBodySE"), iTween.Hash("amount", new Vector3(0.05f, 0.10f, 0.05f), "time", 1f, "easetype", iTween.EaseType.linear, "looptype", iTween.LoopType.none));
+                    Instantiate(yellowExplosion, transform.position, transform.rotation);
+                    Destroy(col.gameObject);
+                    }
 
         }
     }

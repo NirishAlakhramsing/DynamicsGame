@@ -54,7 +54,7 @@ public class EnemyBehaviour : MonoBehaviour {
             //Trigger Death
             if (MiniBoss2Hp <= 0)
             {
-                //spawn sphere ability
+                //spawn second ability pickup
                 Instantiate(firstPowerUp, transform.position, transform.rotation);
 
                 //Miniboss dies
@@ -73,10 +73,10 @@ public class EnemyBehaviour : MonoBehaviour {
             prjHitScript.inRange = true;
         }
 
-        if (col.gameObject.tag == "Projectile")
-        {
-            prjHitScript.inRange = true;
-        }
+        //if (col.gameObject.tag == "Projectile")
+        //{
+        //    prjHitScript.inRange = true;
+        //}
     }
 
     void OnTriggerExit(Collider col)
