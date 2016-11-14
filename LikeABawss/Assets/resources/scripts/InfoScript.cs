@@ -64,5 +64,17 @@ public class InfoScript : MonoBehaviour {
             Destroy(gameObject);
         }
 
+        
+        if (col.gameObject.tag == "Player" && gameObject.name == "InfoTriggerMiniBossTwo")
+        {
+            uiManagerScript.StartCoroutine(uiManagerScript.RenderText(5));
+            Destroy(gameObject);
+        }
+
+        if (col.gameObject.tag == "Player" && gameObject.name == "InfoTriggerBridge")
+        {
+            uiManagerScript.StartCoroutine(uiManagerScript.RenderText(7));
+            Destroy(gameObject);
+        }
     }
 }

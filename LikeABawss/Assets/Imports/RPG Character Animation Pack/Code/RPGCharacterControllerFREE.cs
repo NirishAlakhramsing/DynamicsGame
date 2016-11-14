@@ -828,12 +828,13 @@ public class RPGCharacterControllerFREE : MonoBehaviour
 		{
             canJump = false;
             canMove = false;
-
-            if (GUI.Button(new Rect(10, 100, 100, 30), "Respawn"))
+            Cursor.visible = true;
+            if (GUI.Button(new Rect(200, 200, 100, 30), "Respawn"))
             {
                 StartCoroutine(_Revive());
                 gameObject.transform.position = GameObject.Find(currentCheckPoint).transform.position;
                 hpScript.Respawn();
+                Cursor.visible = false;
             }
 
             //old original code

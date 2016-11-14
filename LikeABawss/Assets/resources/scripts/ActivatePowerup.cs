@@ -58,6 +58,9 @@ public class ActivatePowerup : MonoBehaviour {
                 //show UI for ability one useage
                 iTween.FadeTo(GameObject.Find("MouseLeftButton"), iTween.Hash("alpha", 1f, "time", 1.0f, "easetype", iTween.EaseType.linear, "looptype", iTween.LoopType.none));
 
+                //Give text feedback
+                uiManagerScript.StartCoroutine(uiManagerScript.RenderText(6));
+
                 //Destroy PowerUpObject
                 Destroy(gameObject, 0.5f);
             }

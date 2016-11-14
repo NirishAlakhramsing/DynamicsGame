@@ -28,7 +28,6 @@ public class BreakableWall : MonoBehaviour {
             //Crumble the wall
             crumbleScript.CreateCrumble();
 
-            
             Destroy(col.gameObject);
             Destroy(gameObject);
         }

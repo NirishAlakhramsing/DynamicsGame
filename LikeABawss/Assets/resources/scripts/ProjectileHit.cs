@@ -3,6 +3,7 @@ using System.Collections;
 
 public class ProjectileHit : MonoBehaviour {
 
+    public CrumbleDownStoneScript crumbeScript;
     public EnemyBehaviour enemyScript;
     public Transform playerPos;
     private Transform p_Transform;
@@ -23,7 +24,7 @@ public class ProjectileHit : MonoBehaviour {
 
     // Use this for initialization
     void Start () {
-
+        crumbeScript = gameObject.GetComponent<CrumbleDownStoneScript>();
         bossScript = GameObject.Find("Boss").GetComponent<BossScript>();
 
         if(gameObject.name == "NormalShieldEnemy")
@@ -59,7 +60,7 @@ public class ProjectileHit : MonoBehaviour {
         if(enemyScript.MiniBoss2Hp <= 0 && gameObject.name == "MiniBossTwo")
         {
             Destroy(gameObject);
-
+            
             //spawn second ability pickup
             Instantiate(secondPowerUp, transform.position, transform.rotation);
         }
@@ -97,9 +98,9 @@ public class ProjectileHit : MonoBehaviour {
             {
                 iTween.PunchScale(GameObject.Find("MiniBossOne"), iTween.Hash("amount", new Vector3(0.10f, 0.15f, 0.10f), "time", 1f, "easetype", iTween.EaseType.linear, "looptype", iTween.LoopType.none));
                 enemyScript.MiniBossHp--;
+                crumbeScript.CreateCrumble();
                 Instantiate(redExplosion, transform.position, transform.rotation);
                 Destroy(col.gameObject);
-                Debug.Log("MiniBoss got hit");
             }
 
             //MNIBOSS TWO collision
@@ -107,14 +108,13 @@ public class ProjectileHit : MonoBehaviour {
             {
                 iTween.PunchScale(GameObject.Find("MiniBossTwo"), iTween.Hash("amount", new Vector3(0.05f, 0.20f, 0.05f), "time", 1f, "easetype", iTween.EaseType.linear, "looptype", iTween.LoopType.none));
                 enemyScript.MiniBoss2Hp--;
+                crumbeScript.CreateCrumble();
                 Instantiate(redExplosion, transform.position, transform.rotation);
-                Debug.Log("MiniBossTwo got hit");
             }
 
 
             if (gameObject.name == "MiniBossTwo" && gameObject.tag == "EnemyT1" && col.gameObject.name == "explosiveProjectile(Clone)" && !hasShield)
             {
-
                 Instantiate(yellowExplosion, transform.position, transform.rotation);
                 Destroy(col.gameObject);
             }

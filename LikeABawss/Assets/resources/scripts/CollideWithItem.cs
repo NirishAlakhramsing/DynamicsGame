@@ -6,12 +6,14 @@ public class CollideWithItem : MonoBehaviour {
     Vector3 playerBackPos;
     GameObject getPlayerObj;
     public BackPack backpackScript;
+    public UIManager uiScript;
 
     // Use this for initialization
     void Start () {
         playerBackPos = GameObject.Find("PlayerBack").transform.position;
         getPlayerObj = GameObject.Find("PlayerBack");
         backpackScript = GameObject.Find("BackPackManager").GetComponent<BackPack>();
+        uiScript = GameObject.Find("UI manager").GetComponent<UIManager>();
     }
 	
 	// Update is called once per frame
@@ -29,7 +31,8 @@ public class CollideWithItem : MonoBehaviour {
 
             gameObject.transform.localPosition = getPlayerObj.transform.localPosition;
             iTween.Stop(gameObject);
-
+            Destroy(GameObject.Find("InfoTriggerKeyDoor1"));
+            
             //set item to players backpack(script)
             backpackScript.AquireItem(gameObject.name);
             Debug.Log(backpackScript.hasKey);

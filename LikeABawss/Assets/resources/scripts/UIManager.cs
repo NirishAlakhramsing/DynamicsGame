@@ -14,6 +14,9 @@ public class UIManager : MonoBehaviour {
 
     // Use this for initialization
     void Awake () {
+        //dont show your mousecursor
+        Cursor.visible = false;
+
         iTween.FadeTo(GameObject.Find("GUI Camera"), iTween.Hash("alpha", 0f, "time", 0.0f, "easetype", iTween.EaseType.linear, "looptype", iTween.LoopType.none));
         iTween.FadeTo(GameObject.Find("Controls"), iTween.Hash("alpha", 1f, "time", 1.0f, "easetype", iTween.EaseType.linear, "looptype", iTween.LoopType.none, "delay", 1.1f));
         iTween.FadeTo(GameObject.Find("MouseRightButton"), iTween.Hash("alpha", 0f, "time", 0.0f, "easetype", iTween.EaseType.linear, "looptype", iTween.LoopType.none));
@@ -71,6 +74,30 @@ public class UIManager : MonoBehaviour {
         {
             //new text
             text.text = "...It looks real aggressive... I want to go home now";
+            //move in
+            iTween.MoveBy(GameObject.Find("CharacterUISprite"), iTween.Hash("amount", new Vector3(15f, 0f, 0f), "time", 1f, "easetype", iTween.EaseType.linear, "looptype", iTween.LoopType.none));
+        }
+
+        if (textNr == 5)
+        {
+            //new text
+            text.text = "This one has a shield. My fire balls will melt them!";
+            //move in
+            iTween.MoveBy(GameObject.Find("CharacterUISprite"), iTween.Hash("amount", new Vector3(15f, 0f, 0f), "time", 1f, "easetype", iTween.EaseType.linear, "looptype", iTween.LoopType.none));
+        }
+
+        if (textNr == 6)
+        {
+            //new text
+            text.text = "My left hand sparkles from fireballs!";
+            //move in
+            iTween.MoveBy(GameObject.Find("CharacterUISprite"), iTween.Hash("amount", new Vector3(15f, 0f, 0f), "time", 1f, "easetype", iTween.EaseType.linear, "looptype", iTween.LoopType.none));
+        }
+
+        if (textNr == 7)
+        {
+            //new text
+            text.text = "If only i could break those weights that hold the bridge open";
             //move in
             iTween.MoveBy(GameObject.Find("CharacterUISprite"), iTween.Hash("amount", new Vector3(15f, 0f, 0f), "time", 1f, "easetype", iTween.EaseType.linear, "looptype", iTween.LoopType.none));
         }
